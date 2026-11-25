@@ -15,5 +15,10 @@ import { mkdirSync, writeFileSync } from "node:fs";
 // second bite. No grandmother, no "bursting with flavour", no sunset.
 const LINE =
   "The best meal I ever had was a gas-station banh mi eaten on the curb in the rain, pork crackling still popping, the bag already soaked through by the second bite.";
+// Gate guard: the bounty only judges entry.txt of 1-200 characters.
+// Fail loudly here instead of shipping an over-long sentence.
+if (LINE.length < 1 || LINE.length > 200) {
+  throw new Error(`entry is ${LINE.length} characters, must be 1-200`);
+}
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", LINE, "utf8");
